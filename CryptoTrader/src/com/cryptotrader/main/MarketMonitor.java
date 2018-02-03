@@ -37,7 +37,7 @@ public class MarketMonitor {
 		exchangeRate.put("ckusdbuy", new BigDecimal(6.31));
 		exchangeRate.put("ckusdsell", new BigDecimal(6.30));
 		//Æô¶¯»ãÂÊ¼à¿ØÆ÷
-		pool.submit(new ExchangeRateMonitor(60000,exchangeRate));
+		pool.submit(new ExchangeRateMonitor(120000,exchangeRate));
 
 		try {
 			Thread.sleep(5000);

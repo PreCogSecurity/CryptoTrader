@@ -2,9 +2,9 @@ package com.cryptotrader.monitor;
 
 import java.math.BigDecimal;
 import java.util.Map;
-
 import com.cryptotrader.market.Market;
 import com.cryptotrader.market.ZBMarket;
+import com.cryptotrader.market.*;
 
 
 
@@ -33,7 +33,6 @@ public class ExchangeRateMonitor implements Runnable{
 
 	public void run() {
 		for(; !STOP ;) {
-			
 			//从ZB平台获取bitcny和USDT汇率
 			BigDecimal BitCnyBuy = new BigDecimal(0.0000);
 			BigDecimal BitCnySell = new BigDecimal(0.0000);
@@ -53,10 +52,8 @@ public class ExchangeRateMonitor implements Runnable{
 			BigDecimal usdtusdSell = new BigDecimal(0.0000);
 			
 			try {
-				BitCnyBuy = (BigDecimal)zbMarket.getBestAsk("bitcny_qc", new BigDecimal(20000)).get("bestAsk");
-				BitCnySell = (BigDecimal)zbMarket.getBestBid("bitcny_qc", new BigDecimal(20000)).get("bestBid");
-				usdtBuy = (BigDecimal)zbMarket.getBestAsk("usdt_qc", new BigDecimal(3000)).get("bestAsk");
-				usdtSell = (BigDecimal)zbMarket.getBestBid("usdt_qc", new BigDecimal(3000)).get("bestBid");
+				usdtusdBuy = (BigDecimal)krakenMarket.getBestAsk("usdtzusd", new BigDecimal(3000)).get("bestAsk");
+				usdtusdSell = (BigDecimal)krakenMarket.getBestBid("usdzusd", new BigDecimal(3000)).get("bestBid");
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -66,8 +63,10 @@ public class ExchangeRateMonitor implements Runnable{
 			exchangeRate.put("bitcnysell", BitCnySell);
 			exchangeRate.put("zbusdtbuy", usdtBuy);
 			exchangeRate.put("zbusdtsell", usdtSell);
-			//System.out.println("usdtbuy:" + usdtBuy);
-			//System.out.println("usdtsell:" + usdtSell);
+			exchangeRate.put("usdtusd", usdtusdBuy);
+			exchangeRate.put("usdtusd", usdtusdSell);
+			System.out.println("usdtusd:" + usdtBuy);
+			System.out.println("usdtusd:" + usdtSell);
 			
 			if(STARTUP){
 				System.out.println("汇率监控器启动成功！");
