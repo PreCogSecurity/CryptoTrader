@@ -52,8 +52,8 @@ public class ExchangeRateMonitor implements Runnable{
 			BigDecimal usdtusdSell = new BigDecimal(0.0000);
 			
 			try {
-				usdtusdBuy = (BigDecimal)krakenMarket.getBestAsk("usdtzusd", new BigDecimal(3000)).get("bestAsk");
-				usdtusdSell = (BigDecimal)krakenMarket.getBestBid("usdzusd", new BigDecimal(3000)).get("bestBid");
+				//usdtusdBuy = (BigDecimal)krakenMarket.getBestAsk("usdtzusd", new BigDecimal(100)).get("bestAsk");
+				//usdtusdSell = (BigDecimal)krakenMarket.getBestBid("usdzusd", new BigDecimal(100)).get("bestBid");
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -63,10 +63,10 @@ public class ExchangeRateMonitor implements Runnable{
 			exchangeRate.put("bitcnysell", BitCnySell);
 			exchangeRate.put("zbusdtbuy", usdtBuy);
 			exchangeRate.put("zbusdtsell", usdtSell);
-			exchangeRate.put("usdtusd", usdtusdBuy);
-			exchangeRate.put("usdtusd", usdtusdSell);
-			System.out.println("usdtusd:" + usdtBuy);
-			System.out.println("usdtusd:" + usdtSell);
+			//exchangeRate.put("usdtusd", usdtusdBuy);
+			//exchangeRate.put("usdtusd", usdtusdSell);
+			System.out.println("usdtusd:" + usdtusdBuy);
+			System.out.println("usdtusd:" + usdtusdSell);
 			
 			if(STARTUP){
 				System.out.println("汇率监控器启动成功！");
