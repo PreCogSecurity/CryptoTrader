@@ -17,8 +17,8 @@ import com.cryptotrader.monitor.ZBMarketMonitor;
 import com.cryptotrader.strategy.Strategy1;
 
 public class MarketMonitor {
-	public static String[] WARCHER_LIST = {"ETH","LTC","BTC","ETC","BTS","BCC"};
-	//public static String[] WARCHER_LIST = {"ETH"};
+	//public static String[] WARCHER_LIST = {"ETH","LTC","BTC","ETC","BTS","BCC"};
+	public static String[] WARCHER_LIST = {"ETH","LTC"};
 	public static Map<String, BigDecimal> priceMap = new HashMap<String, BigDecimal>();
 	public static Map<String, BigDecimal> exchangeRate = new HashMap<String, BigDecimal>();
 	public static int marketSize = 3;
@@ -30,8 +30,8 @@ public class MarketMonitor {
 		//初始化汇率参数
 		exchangeRate.put("qcbuy", new BigDecimal(1));
 		exchangeRate.put("qcsell", new BigDecimal(1));
-		//exchangeRate.put("zbusdtbuy", new BigDecimal(6.5));
-		//exchangeRate.put("zbusdtsell", new BigDecimal(6.43));
+		exchangeRate.put("zbusdtbuy", new BigDecimal(6.5));
+		exchangeRate.put("zbusdtsell", new BigDecimal(6.43));
 		exchangeRate.put("usdtbuy", new BigDecimal(6.5));
 		exchangeRate.put("usdtsell", new BigDecimal(6.5));
 		exchangeRate.put("ckusdbuy", new BigDecimal(6.31));

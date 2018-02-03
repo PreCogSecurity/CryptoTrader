@@ -121,7 +121,7 @@ public class Strategy1 implements Runnable{
 			
 			
 			
-			if(SELLPRICE.subtract(BUYPRICE).compareTo(GAP) >=0){
+			if(SELLPRICE.subtract(BUYPRICE).compareTo(GAP) >=0 && BUYPRICE.compareTo(new BigDecimal(0.00)) > 0 && SELLPRICE.compareTo(new BigDecimal(99999999.00))>=0){
 				day = new Date();
 				System.err.println(df.format(day) + "   " + 
 						currency+

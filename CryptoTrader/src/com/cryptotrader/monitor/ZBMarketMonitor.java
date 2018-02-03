@@ -53,7 +53,7 @@ public class ZBMarketMonitor implements Runnable{
 				zbTickerMap = zbMarket.ticker(currency + "_usdt");
 				Map<String, Object> zbTicker = (Map<String, Object>)zbTickerMap.get("ticker");
 				BigDecimal last = convertor.convert(zbTicker.get("last"));
-				last = last.multiply((BigDecimal) exchangeRate.get("usdtbuy")).setScale(2,BigDecimal.ROUND_HALF_UP);
+				last = last.multiply((BigDecimal) exchangeRate.get("zbusdtbuy")).setScale(2,BigDecimal.ROUND_HALF_UP);
 				priceMap.put(currency + ":ZB_USDT_LAST" + "", last);
 			}
 			catch(Exception e) {
@@ -85,8 +85,8 @@ public class ZBMarketMonitor implements Runnable{
 			try{
 				bestAsk = zbMarket.getBestAsk(currency + "_usdt", new BigDecimal(3));
 				bestBid = zbMarket.getBestBid(currency + "_usdt", new BigDecimal(3));
-				priceMap.put(currency + ":ZB_USDT_BESTASK", ((BigDecimal)bestAsk.get("bestAsk")).multiply((BigDecimal) exchangeRate.get("usdtbuy")).setScale(2,BigDecimal.ROUND_HALF_UP));
-				priceMap.put(currency + ":ZB_USDT_BESTBID", ((BigDecimal)bestBid.get("bestBid")).multiply((BigDecimal) exchangeRate.get("usdtsell")).setScale(2,BigDecimal.ROUND_HALF_UP));
+				priceMap.put(currency + ":ZB_USDT_BESTASK", ((BigDecimal)bestAsk.get("bestAsk")).multiply((BigDecimal) exchangeRate.get("zbusdtbuy")).setScale(2,BigDecimal.ROUND_HALF_UP));
+				priceMap.put(currency + ":ZB_USDT_BESTBID", ((BigDecimal)bestBid.get("bestBid")).multiply((BigDecimal) exchangeRate.get("zbusdtsell")).setScale(2,BigDecimal.ROUND_HALF_UP));
 				priceMap.put(currency + ":ZB_USDT_BESTASKVOL", (BigDecimal)bestAsk.get("askVol"));
 				priceMap.put(currency + ":ZB_USDT_BESTBIDVOL", (BigDecimal)bestBid.get("bidVol"));
 			}catch(Exception e) {

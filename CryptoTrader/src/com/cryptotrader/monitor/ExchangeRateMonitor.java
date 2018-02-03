@@ -18,6 +18,7 @@ import com.cryptotrader.market.ZBMarket;
 public class ExchangeRateMonitor implements Runnable{
 	private int duration;
 	private Market zbMarket;
+	private Market krakenMarket;
 	private Map exchangeRate;
 	public static volatile boolean STOP = false;
 	public static volatile boolean STARTUP = true;
@@ -26,6 +27,7 @@ public class ExchangeRateMonitor implements Runnable{
 		this.duration = duration;
 		this.exchangeRate = priceMap;
 		zbMarket = new ZBMarket();
+		krakenMarket = new KrakenMarket();
 	}
 		
 
@@ -45,10 +47,25 @@ public class ExchangeRateMonitor implements Runnable{
 			} catch (Exception e) {
 				System.out.println(e);
 			}
+			
+			//从KRAKEN平台取USDTUSD汇率
+			BigDecimal usdtusdBuy = new BigDecimal(0.0000);
+			BigDecimal usdtusdSell = new BigDecimal(0.0000);
+			
+			try {
+				BitCnyBuy = (BigDecimal)zbMarket.getBestAsk("bitcny_qc", new BigDecimal(20000)).get("bestAsk");
+				BitCnySell = (BigDecimal)zbMarket.getBestBid("bitcny_qc", new BigDecimal(20000)).get("bestBid");
+				usdtBuy = (BigDecimal)zbMarket.getBestAsk("usdt_qc", new BigDecimal(3000)).get("bestAsk");
+				usdtSell = (BigDecimal)zbMarket.getBestBid("usdt_qc", new BigDecimal(3000)).get("bestBid");
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			
+			
 			exchangeRate.put("bitcnybuy", BitCnyBuy);
 			exchangeRate.put("bitcnysell", BitCnySell);
-			exchangeRate.put("usdtbuy", usdtBuy);
-			exchangeRate.put("usdtsell", usdtSell);
+			exchangeRate.put("zbusdtbuy", usdtBuy);
+			exchangeRate.put("zbusdtsell", usdtSell);
 			//System.out.println("usdtbuy:" + usdtBuy);
 			//System.out.println("usdtsell:" + usdtSell);
 			
