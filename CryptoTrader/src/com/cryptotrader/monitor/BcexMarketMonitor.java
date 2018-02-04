@@ -45,7 +45,7 @@ public class BcexMarketMonitor implements Runnable{
 				priceMap.put(currency + ":BCEX_CKUSD_LAST" + "", last);
 			}
 			catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				continue;
 			}			
 			
@@ -66,7 +66,7 @@ public class BcexMarketMonitor implements Runnable{
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
-					System.out.println(e);
+					e.printStackTrace();
 				}
 				continue;
 			}	
@@ -93,7 +93,7 @@ public class BcexMarketMonitor implements Runnable{
 				Thread.sleep(duration+ random.nextInt(duration));
 			} catch (InterruptedException e) {
 
-				System.out.println(e);
+				e.printStackTrace();
 			}
 			
 		}

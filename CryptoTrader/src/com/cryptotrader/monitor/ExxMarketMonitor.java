@@ -38,7 +38,7 @@ public class ExxMarketMonitor implements Runnable{
 				priceMap.put(currency + ":EXX_QC_LAST" + "", last);
 			}
 			catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				continue;
 			}			
 
@@ -66,11 +66,11 @@ public class ExxMarketMonitor implements Runnable{
 				priceMap.put(currency + ":EXX_QC_BESTASKVOL", (BigDecimal)exxBestAsk.get("askVol"));
 				priceMap.put(currency + ":EXX_QC_BESTBIDVOL", (BigDecimal)exxBestBid.get("bidVol"));
 			}catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
-					System.out.println(e);
+					e.printStackTrace();
 				}
 				continue;
 			}	
@@ -110,7 +110,7 @@ public class ExxMarketMonitor implements Runnable{
 				Thread.sleep(duration+ random.nextInt(duration));
 			} catch (InterruptedException e) {
 
-				System.out.println(e);
+				e.printStackTrace();
 			}
 			
 		}

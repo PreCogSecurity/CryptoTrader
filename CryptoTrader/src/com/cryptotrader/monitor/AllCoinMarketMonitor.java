@@ -45,7 +45,7 @@ public class AllCoinMarketMonitor implements Runnable{
 				priceMap.put(currency + ":ALLCOIN_CKUSD_LAST" + "", last);
 			}
 			catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				continue;
 			}			
 			
@@ -62,11 +62,11 @@ public class AllCoinMarketMonitor implements Runnable{
 				priceMap.put(currency + ":ALLCOIN_CKUSD_BESTASKVOL", (BigDecimal)bestAsk.get("askVol"));
 				priceMap.put(currency + ":ALLCOIN_CKUSD_BESTBIDVOL", (BigDecimal)bestBid.get("bidVol"));
 			}catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
-					System.out.println(e);
+					e.printStackTrace();
 				}
 				continue;
 			}	
@@ -93,7 +93,7 @@ public class AllCoinMarketMonitor implements Runnable{
 				Thread.sleep(duration+ random.nextInt(duration));
 			} catch (InterruptedException e) {
 
-				System.out.println(e);
+				e.printStackTrace();
 			}
 			
 		}

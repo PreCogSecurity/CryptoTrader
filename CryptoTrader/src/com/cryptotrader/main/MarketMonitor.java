@@ -13,6 +13,7 @@ import com.cryptotrader.monitor.ExchangeRateMonitor;
 import com.cryptotrader.monitor.ExxMarketMonitor;
 import com.cryptotrader.monitor.GateMarketMonitor;
 import com.cryptotrader.monitor.HuobiMarketMonitor;
+import com.cryptotrader.monitor.KrakenMarketMonitor;
 import com.cryptotrader.monitor.ZBMarketMonitor;
 import com.cryptotrader.strategy.Strategy1;
 
@@ -30,10 +31,10 @@ public class MarketMonitor {
 		//初始化汇率参数
 		exchangeRate.put("qcbuy", new BigDecimal(1));
 		exchangeRate.put("qcsell", new BigDecimal(1));
-		exchangeRate.put("zbusdtbuy", new BigDecimal(6.5));
-		exchangeRate.put("zbusdtsell", new BigDecimal(6.43));
-		exchangeRate.put("usdtbuy", new BigDecimal(6.5));
-		exchangeRate.put("usdtsell", new BigDecimal(6.5));
+		//exchangeRate.put("zbusdtbuy", new BigDecimal(6.5));
+		//exchangeRate.put("zbusdtsell", new BigDecimal(6.43));
+		//exchangeRate.put("usdtbuy", new BigDecimal(6.5));
+		//exchangeRate.put("usdtsell", new BigDecimal(6.5));
 		exchangeRate.put("ckusdbuy", new BigDecimal(6.31));
 		exchangeRate.put("ckusdsell", new BigDecimal(6.30));
 		//启动汇率监控器
@@ -54,12 +55,13 @@ public class MarketMonitor {
 			//pool.submit(new AllCoinMarketMonitor(currency, 10000,priceMap,exchangeRate));
 			//pool.submit(new ExxMarketMonitor(currency, 10000,priceMap,exchangeRate));
 			//pool.submit(new HuobiMarketMonitor(currency, 30000,priceMap,exchangeRate));
+			pool.submit(new KrakenMarketMonitor(currency, 30000,priceMap,exchangeRate));
 			pool.submit(new Strategy1(currency, 20000,priceMap));
 		}
 		
 		//驱动监控策略
 		
-		System.out.println("数字货币监控程序开始运行");
+		System.out.println("----数字货币监控程序开始运行----");
 		
 	}
 }

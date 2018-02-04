@@ -37,7 +37,7 @@ public class AexMarketMonitor implements Runnable{
 				priceMap.put(currency + ":AEX_BITCNY_LAST", last.multiply((BigDecimal) exchangeRate.get("bitcnybuy")));
 			}
 			catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				continue;
 			}			
 
@@ -49,7 +49,7 @@ public class AexMarketMonitor implements Runnable{
 				priceMap.put(currency + ":AEX_USDT_LAST" , last);
 			}
 			catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				continue;
 			}
 			
@@ -71,7 +71,7 @@ public class AexMarketMonitor implements Runnable{
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
-					System.out.println(e);
+					e.printStackTrace();
 				}
 				continue;
 			}	
@@ -84,11 +84,11 @@ public class AexMarketMonitor implements Runnable{
 				priceMap.put(currency + ":AEX_USDT_BESTASKVOL", (BigDecimal)aexBestAsk.get("askVol"));
 				priceMap.put(currency + ":AEX_USDT_BESTBIDVOL", (BigDecimal)aexBestBid.get("bidVol"));
 			}catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
-					System.out.println(e);
+					e.printStackTrace();
 				}
 				continue;
 			}	
@@ -113,7 +113,7 @@ public class AexMarketMonitor implements Runnable{
 				Thread.sleep(duration+ random.nextInt(duration));
 			} catch (InterruptedException e) {
 
-				System.out.println(e);
+				e.printStackTrace();
 			}
 			
 		}

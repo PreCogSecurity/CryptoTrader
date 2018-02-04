@@ -44,29 +44,34 @@ public class ExchangeRateMonitor implements Runnable{
 				usdtBuy = (BigDecimal)zbMarket.getBestAsk("usdt_qc", new BigDecimal(3000)).get("bestAsk");
 				usdtSell = (BigDecimal)zbMarket.getBestBid("usdt_qc", new BigDecimal(3000)).get("bestBid");
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
+			
+			exchangeRate.put("bitcnybuy", BitCnyBuy);
+			exchangeRate.put("bitcnysell", BitCnySell);
+			exchangeRate.put("usdtbuy", usdtBuy);
+			exchangeRate.put("usdtsell", usdtSell);
+			
 			
 			//从KRAKEN平台取USDTUSD汇率
 			BigDecimal usdtusdBuy = new BigDecimal(0.0000);
 			BigDecimal usdtusdSell = new BigDecimal(0.0000);
 			
 			try {
-				//usdtusdBuy = (BigDecimal)krakenMarket.getBestAsk("usdtzusd", new BigDecimal(100)).get("bestAsk");
-				//usdtusdSell = (BigDecimal)krakenMarket.getBestBid("usdzusd", new BigDecimal(100)).get("bestBid");
+				usdtusdBuy = (BigDecimal)krakenMarket.getBestAsk("usdtzusd", new BigDecimal(3000)).get("bestAsk");
+				usdtusdSell = (BigDecimal)krakenMarket.getBestBid("usdtzusd", new BigDecimal(3000)).get("bestBid");
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
-			
-			
-			exchangeRate.put("bitcnybuy", BitCnyBuy);
-			exchangeRate.put("bitcnysell", BitCnySell);
-			exchangeRate.put("zbusdtbuy", usdtBuy);
-			exchangeRate.put("zbusdtsell", usdtSell);
+			//System.out.println("usdtusdbuy:" + usdtusdBuy);
+			//System.out.println("usdtusdSell:" + usdtusdSell);
+			exchangeRate.put("usdtusdbuy", usdtusdBuy);
+			exchangeRate.put("usdtusdsell", usdtusdSell);
+
 			//exchangeRate.put("usdtusd", usdtusdBuy);
 			//exchangeRate.put("usdtusd", usdtusdSell);
-			System.out.println("usdtusd:" + usdtusdBuy);
-			System.out.println("usdtusd:" + usdtusdSell);
+			//System.out.println("usdtbuy:" + usdtBuy);
+			//System.out.println("usdtsell:" + usdtSell);
 			
 			if(STARTUP){
 				System.out.println("汇率监控器启动成功！");
@@ -76,7 +81,6 @@ public class ExchangeRateMonitor implements Runnable{
 			try {
 				Thread.sleep(duration);
 			} catch (InterruptedException e) {
-
 				e.printStackTrace();
 			}
 			

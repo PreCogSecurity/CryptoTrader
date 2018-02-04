@@ -15,7 +15,7 @@ public class Strategy1 implements Runnable{
 	public static volatile boolean STOP = false;
 	public static volatile boolean STARTUP = true;
 	//public static String[] MARKET_LIST = {"ZB_QC","ZB_USDT","AEX_BITCNY","AEX_USDT","EXX_QC","HUOBI_USDT","GATE_USDT","BCEX_CKUSD""ALLCOIN_CK.USD"};
-	public static String[] MARKET_LIST = {"ZB_QC","ZB_USDT","AEX_BITCNY"};
+	public static String[] MARKET_LIST = {"ZB_QC","ZB_USDT","AEX_BITCNY","GATE_USDT","KRAKEN_USD"};
 	private String BUYMARKET;
 	private String SELLMARKET;
 	private BigDecimal BUYPRICE;
@@ -42,7 +42,7 @@ public class Strategy1 implements Runnable{
 				java.util.Random random = new java.util.Random();
 				Thread.sleep(duration+ random.nextInt(duration));
 			} catch (InterruptedException e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 
 			//如果是初次启动成功，则给出提示

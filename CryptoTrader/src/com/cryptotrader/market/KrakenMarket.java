@@ -37,14 +37,14 @@ public class KrakenMarket extends Market{
 		
 		String callback = "{}";
 		try {
-			String url = API_DOMAIN + "ticker?pair=" + currency;
+			String url = API_DOMAIN + "Ticker?pair=" + currency;
 			callback = get(url, "UTF-8");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		
 		jsonMap = JSON.parseObject(callback);
-		System.out.println("ticker:" + jsonMap);
+		//System.out.println("ticker:" + jsonMap);
 		return jsonMap;
 	}
 	
@@ -58,12 +58,14 @@ public class KrakenMarket extends Market{
 	 */
 	public Map<String, Object> retriveMarketDepth(String currency, int depth) throws IOException{
 		Map<String, Object> jsonMap = null; 
+		Map<String, Object> resultMap = null; 
 
-		String url = API_DOMAIN + "Depth?pair=" + currency;
+		String url = API_DOMAIN + "Depth?pair=" + currency + "&count=" + depth;
 		String response = get(url, "UTF-8");
 		jsonMap = JSON.parseObject(response, Map.class);
-		System.out.println(jsonMap);
-		return jsonMap;
+		resultMap = (Map)((Map)jsonMap.get("result")).get(currency.toUpperCase());
+		//System.out.println(resultMap);
+		return resultMap;
 	}
 	
 	/**
@@ -97,7 +99,7 @@ public class KrakenMarket extends Market{
 		BigDecimal askPrice = new BigDecimal(0.0);
 		BigDecimal askVol = new BigDecimal(0.0);
 		
-		JSONArray askArray = (JSONArray) this.getAsks(currency, 20);
+		JSONArray askArray = (JSONArray) this.getAsks(currency, 10);
 		//Collections.reverse(askArray);
 		BigDecimal totalVol = new BigDecimal(0.0000);
 		for(Object item : askArray) {
@@ -114,7 +116,7 @@ public class KrakenMarket extends Market{
 			} 
 		}
 		
-		bestAsk.put("bestAsk", askPrice.setScale(2,BigDecimal.ROUND_HALF_UP));
+		bestAsk.put("bestAsk", askPrice.setScale(4,BigDecimal.ROUND_HALF_UP));
 		bestAsk.put("askVol", askVol.setScale(4,BigDecimal.ROUND_HALF_UP));
 		//System.out.println("BEST ASK:" + bestAsk);
 		return bestAsk;
@@ -131,7 +133,7 @@ public class KrakenMarket extends Market{
 		BigDecimal bidPrice = new BigDecimal(0.0);
 		BigDecimal bidVol = new BigDecimal(0.0);
 		
-		JSONArray bidArray = (JSONArray) this.getBids(currency, 20);
+		JSONArray bidArray = (JSONArray) this.getBids(currency, 10);
 		BigDecimal totalVol = new BigDecimal(0.0000);
 		for(Object item : bidArray) {
 			Object volObj = ((JSONArray)item).get(1);
@@ -147,7 +149,7 @@ public class KrakenMarket extends Market{
 			} 
 
 		}
-		bestBid.put("bestBid", bidPrice.setScale(2,BigDecimal.ROUND_HALF_UP));
+		bestBid.put("bestBid", bidPrice.setScale(4,BigDecimal.ROUND_HALF_UP));
 		bestBid.put("bidVol", bidVol.setScale(4,BigDecimal.ROUND_HALF_UP));
 		//System.out.println("BEST BID:" + bestBid);
 		return bestBid;

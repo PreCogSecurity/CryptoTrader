@@ -44,11 +44,12 @@ public class KrakenMarketMonitor implements Runnable{
 				Map<String, Object> result = (Map<String, Object>)ticker.get("X"+ currency + "ZUSD");
 				JSONArray array = (JSONArray) result.get("c");
 				BigDecimal last = convertor.convert(array.get(0));
-				last = last.multiply((BigDecimal) exchangeRate.get("zbusdtbuy")).setScale(2,BigDecimal.ROUND_HALF_UP);
+				last = last.multiply((BigDecimal) exchangeRate.get("usdtbuy"));
+				last = last.divide((BigDecimal) exchangeRate.get("usdtusdsell"),2, BigDecimal.ROUND_HALF_EVEN).setScale(2,BigDecimal.ROUND_HALF_UP);
 				priceMap.put(currency + ":KRAKEN_USD_LAST" + "", last);
 			}
 			catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				continue;
 			}			
 
@@ -59,18 +60,18 @@ public class KrakenMarketMonitor implements Runnable{
 			Map<String, Object> bestBid = null;
 			
 			try{
-				bestAsk = krakenMarket.getBestAsk(currency + "usd", new BigDecimal(3));
-				bestBid = krakenMarket.getBestBid(currency + "usd", new BigDecimal(3));
-				priceMap.put(currency + ":KRAKEN_USD_BESTASK", ((BigDecimal)bestAsk.get("bestAsk")).multiply((BigDecimal) exchangeRate.get("zbusdtbuy")).setScale(2,BigDecimal.ROUND_HALF_UP));
-				priceMap.put(currency + ":KRAKEN_USD_BESTBID", ((BigDecimal)bestBid.get("bestBid")).multiply((BigDecimal) exchangeRate.get("zbusdtsell")).setScale(2,BigDecimal.ROUND_HALF_UP));
+				bestAsk = krakenMarket.getBestAsk("X"+ currency + "ZUSD", new BigDecimal(3));
+				bestBid = krakenMarket.getBestBid("X"+ currency + "ZUSD", new BigDecimal(3));
+				priceMap.put(currency + ":KRAKEN_USD_BESTASK", ((BigDecimal)bestAsk.get("bestAsk")).multiply((BigDecimal) exchangeRate.get("usdtbuy")).divide((BigDecimal) exchangeRate.get("usdtusdsell"),2, BigDecimal.ROUND_HALF_EVEN).setScale(2,BigDecimal.ROUND_HALF_UP));
+				priceMap.put(currency + ":KRAKEN_USD_BESTBID", ((BigDecimal)bestBid.get("bestBid")).multiply((BigDecimal) exchangeRate.get("usdtsell")).divide((BigDecimal) exchangeRate.get("usdtusdbuy"),2, BigDecimal.ROUND_HALF_EVEN).setScale(2,BigDecimal.ROUND_HALF_UP));
 				priceMap.put(currency + ":KRAKEN_USD_BESTASKVOL", (BigDecimal)bestAsk.get("askVol"));
 				priceMap.put(currency + ":KRAKEN_USD_BESTBIDVOL", (BigDecimal)bestBid.get("bidVol"));
 			}catch(Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e1) {
-					System.out.println(e);
+					e.printStackTrace();
 				}
 				continue;
 			}	
@@ -78,7 +79,7 @@ public class KrakenMarketMonitor implements Runnable{
 			
 			//如果是初次启动成功，则给出提示
 			if(STARTUP){
-				System.out.println("ZB市场监控器启动成功！");
+				System.out.println("KRAKEN市场监控器启动成功！");
 				STARTUP = false;
 			}
 			
@@ -97,7 +98,7 @@ public class KrakenMarketMonitor implements Runnable{
 				Thread.sleep(duration+ random.nextInt(duration));
 			} catch (InterruptedException e) {
 
-				System.out.println(e);
+				e.printStackTrace();
 			}
 			
 		}
